@@ -1,3 +1,5 @@
+//import useMutation
+import { useMutation } from '@apollo/client';
 import React, { useState, useEffect } from 'react';
 import {
   Container,
@@ -9,15 +11,18 @@ import {
 
 import { getMe, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
+
 import { removeBookId } from '../utils/localStorage';
+//import new REMOVE_BOOK
+import { REMOVE_BOOK } from '../utils/mutations';
 
 const SavedBooks = () => {
   const [userData, setUserData] = useState({});
 
   // use this to determine if `useEffect()` hook needs to run again
   const userDataLength = Object.keys(userData).length;
-
-  useEffect(() => {
+  // const userData= useQuery(QUERY_TECH);
+  useQuery(() => {
     const getUserData = async () => {
       try {
         const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -51,7 +56,7 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await deleteBook(bookId, token);
+      const response = await useMutation(REMOVE_BOOK);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
