@@ -32,18 +32,30 @@ const resolvers = {
         return { token, user };
       },
   
-      saveBook: async (parent, {  input }, context) => {
-        return User.findOneAndUpdate(
-          { _id: context.user._id },
-          {
-            $addToSet: { savedBook: input },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
+      // saveBook: async (parent, {  input }, context) => {
+      //   return User.findOneAndUpdate(
+      //     { _id: context.user._id },
+      //     {
+      //       $addToSet: { savedBook: input },
+      //     },
+      //     {
+      //       new: true,
+      //       runValidators: true,
+      //     }
+      //   );
+      // },
+      saveBook: async (parent, { bookData }, context) => {
+        const updatedUser = await User.findByIdAndUpdate(
+            { _id: context.user._id },
+            {
+                $push: { savedBooks: bookData },
+            },
+            {
+                new: true,
+            }
         );
-      },
+        return updatedUser;
+    },
       removeBook: async (parent, { bookId }, context) => {
         return User.findOneAndUpdate(
           { _id: context.user._id },
