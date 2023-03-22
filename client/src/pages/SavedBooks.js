@@ -65,7 +65,9 @@ const SavedBooks = () => {
     try {
       const { data } = await removeBook({
         variables: { bookId }
+        
       });
+      window.location = '/saved';
 
    /*   if (!response.ok) {
         throw new Error('something went wrong!');
@@ -109,7 +111,7 @@ const SavedBooks = () => {
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
+                    <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId) }>
                       Delete this Book!
                     </Button>
                   </Card.Body>
