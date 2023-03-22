@@ -67,7 +67,7 @@ const SavedBooks = () => {
         variables: { bookId }
         
       });
-      window.location = '/saved';
+      
 
    /*   if (!response.ok) {
         throw new Error('something went wrong!');
