@@ -30,18 +30,12 @@ const SignupForm = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
+//replaced old restful API with new apollow server/graphql querie
     try {
       const { data } = await addUser({
         variables: { ...userFormData }
       });
 
-      // if (!response.ok) {
-      //   throw new Error('something went wrong!');
-      // }
-
-      // const { token, user } = await response.json();
-      // console.log(user);
        Auth.login(data.addUser.token);
     } catch (err) {
       console.error("kai",err);

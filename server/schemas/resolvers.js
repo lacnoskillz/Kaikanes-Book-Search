@@ -1,6 +1,6 @@
 const { Book, User } = require('../models');
 const { signToken } = require('../utils/auth');
-
+// Define the query and mutation functionality to work with the Mongoose models.
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
@@ -40,18 +40,6 @@ const resolvers = {
         return { token, user };
       },
   
-      // saveBook: async (parent, {  input }, context) => {
-      //   return User.findOneAndUpdate(
-      //     { _id: context.user._id },
-      //     {
-      //       $addToSet: { savedBook: input },
-      //     },
-      //     {
-      //       new: true,
-      //       runValidators: true,
-      //     }
-      //   );
-      // },
       saveBook: async (parent, { bookData }, context) => {
         const updatedUser = await User.findByIdAndUpdate(
             { _id: context.user._id },

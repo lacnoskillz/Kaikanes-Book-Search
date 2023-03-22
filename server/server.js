@@ -1,10 +1,11 @@
+//mplement the Apollo Server and apply it to the Express server as middleware.
 const express = require('express');
 const { ApolloServer, AuthenticationError } = require('apollo-server-express');
 const path = require('path');
 const db = require('./config/connection');
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
-
+// add the context for middleware
 const app = express();
 const server = new ApolloServer({
   typeDefs,

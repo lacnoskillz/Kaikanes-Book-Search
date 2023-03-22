@@ -24,7 +24,7 @@ const SearchBooks = () => {
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
-  
+
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -38,7 +38,6 @@ const SearchBooks = () => {
     if (!searchInput) {
       return false;
     }
-
     try {
       const response = await searchGoogleBooks(searchInput);
 
@@ -63,37 +62,35 @@ const SearchBooks = () => {
     }
   };
 
-  // create function to handle saving a book to our database
+  // created function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
     // get token
-    
-    
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     if (!token) {
       return false;
     }
 
-    
 
-    
-      
+
+//changed old resful api to new apollo mutations
+
     try {
       const { data } = await saveBook({
-        
-          variables: { bookData: { ...bookToSave } },
+
+        variables: { bookData: { ...bookToSave } },
       });
       console.log(savedBookIds);
-  } catch (err) {
+    } catch (err) {
       console.error(err);
-  }
-    
-  
-      // if book successfully saves to user's account, save book id to state
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
-  
+    }
+
+
+    // if book successfully saves to user's account, save book id to state
+    setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+
   };
 
   return (
@@ -102,23 +99,23 @@ const SearchBooks = () => {
         <Container>
           <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
-            
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a book'
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              </Col>
-            
+
+            <Col xs={12} md={8}>
+              <Form.Control
+                name='searchInput'
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                type='text'
+                size='lg'
+                placeholder='Search for a book'
+              />
+            </Col>
+            <Col xs={12} md={4}>
+              <Button type='submit' variant='success' size='lg'>
+                Submit Search
+              </Button>
+            </Col>
+
           </Form>
         </Container>
       </div>

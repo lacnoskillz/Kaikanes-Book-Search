@@ -18,12 +18,7 @@ import { REMOVE_BOOK } from '../utils/mutations';
 import { GET_ME } from '../utils/queries';
 
 const SavedBooks = () => {
- 
-
-  // use this to determine if `useEffect()` hook needs to run again
-  
-
-  const { error, loading, data } = useQuery(GET_ME,{
+  const { error, loading, data } = useQuery(GET_ME, {
     pollInterval: 500,
   });
   const [removeBook, { err }] = useMutation(REMOVE_BOOK);
@@ -38,13 +33,13 @@ const SavedBooks = () => {
     if (!token) {
       return false;
     }
-
+// replaced old restful api with new graphql/apollo querie/mutation
     try {
       const { data } = await removeBook({
         variables: { bookId }
-        
+
       });
-      
+
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
@@ -79,7 +74,7 @@ const SavedBooks = () => {
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId) }>
+                    <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
                       Delete this Book!
                     </Button>
                   </Card.Body>
