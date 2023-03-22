@@ -16,7 +16,7 @@ For users to save books they search for so they can later purchase them.
 
 #### Screen shot
 ***
-![image](./Develop/client/public/deployed.png)
+![image](./client/public/deployed.png)
 ##### Link
 ***
 click for deployed app
