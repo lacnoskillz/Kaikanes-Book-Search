@@ -14,8 +14,13 @@ import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 //import SAVE_BOOK
 import { SAVE_BOOK } from '../utils/mutations';
 //import apollo useMutation hook
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_ME } from '../utils/queries'
 const SearchBooks = () => {
+  const { loading, error2, data } = useQuery(GET_ME);
+
+  // Get savedBooks from the user data returned by the ME query
+  const savedBooks = data?.me?.savedBooks || [];
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
@@ -138,16 +143,18 @@ const SearchBooks = () => {
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
+                    {/* change this to fix booksaved bug for new users */}
                     {Auth.loggedIn() && (
-                      <Button
-                        disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
-                        className='btn-block btn-info'
-                        onClick={() => handleSaveBook(book.bookId)}>
-                        {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                          ? 'This book has already been saved!'
-                          : 'Save this Book!'}
-                      </Button>
-                    )}
+  <Button
+    disabled={savedBooks.some((savedBook) => savedBook.bookId === book.bookId)}
+    className='btn-block btn-info'
+    onClick={() => handleSaveBook(book.bookId)}
+  >
+    {savedBooks.some((savedBook) => savedBook.bookId === book.bookId)
+      ? 'This book has already been saved!'
+      : 'Save this Book!'}
+  </Button>
+)}
                   </Card.Body>
                 </Card>
               </Col>
